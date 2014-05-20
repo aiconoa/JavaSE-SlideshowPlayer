@@ -1,4 +1,4 @@
-package com.humanbooster.model;
+package com.humanbooster.slideshowplayer.model;
 
 /**
  * Un slide d'un Slideshow

@@ -1,4 +1,4 @@
-package com.humanbooster.model;
+package com.humanbooster.slideshowplayer.model;
 
 import java.util.Arrays;
 
@@ -20,31 +20,27 @@ public class Slideshow {
     }
 
     /**
-     * Ajoute un slide dans le Slideshow
+     * Ajoute un slide dans le Slideshow à la première place libre
      * @param slide a ajouter dans le Slideshow
      */
     public void addSlide(Slide slide) {
-        boolean slidesWasFull = true;
+        // TODO attention trous dans le tableau (par exemple via suppression) alors
+        // on risque d'introduire un élément ailleurs qu'à la fin
+
         for (int i = 0; i < slides.length; i++) {
             if(slides[i] == null) {
                 slides[i] = slide;
-                slidesWasFull = false;
-                break;
+                numberOfSlides++;
+                return;
             }
         }
-        // TODO heu... ca risque de ne plus marcher si un jour on doit supprimer un élément du tableau => trou introduit
-        // TODO quoi qu'on fait si pas de place vide ?
-        // agrandir le tableau !
 
         // dans le cas ou le tableau est déjà plein (on a pas rajouté notre élément dans le tableau)
-        if(slidesWasFull) {
-            int oldLength = slides.length;
-            // agrandir le tableau de CAPACITY
-            slides =  Arrays.copyOf(slides, slides.length + CAPACITY);
-            // ajoute un élément à la position oldSlides.length
-            slides[oldLength] = slide;
-        }
-
+        int oldLength = slides.length;
+        // agrandir le tableau de CAPACITY
+        slides =  Arrays.copyOf(slides, slides.length + CAPACITY);
+        // ajoute un élément à la position oldSlides.length
+        slides[oldLength] = slide;
         numberOfSlides++;
     }
 

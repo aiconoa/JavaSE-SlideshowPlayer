@@ -1,5 +1,7 @@
-package com.humanbooster.model;
+package com.humanbooster.slideshowplayer.model;
 
+import com.humanbooster.slideshowplayer.model.Slide;
+import com.humanbooster.slideshowplayer.model.Slideshow;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
