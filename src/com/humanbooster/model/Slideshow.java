@@ -1,10 +1,13 @@
 package com.humanbooster.model;
 
+import java.util.Arrays;
+
 /**
  * Représente un document Slideshow.
  * Un slideshow contient une collection de slides
  */
 public class Slideshow {
+
     public static final int CAPACITY = 10;
 
     private Slide[] slides;
@@ -21,15 +24,26 @@ public class Slideshow {
      * @param slide a ajouter dans le Slideshow
      */
     public void addSlide(Slide slide) {
+        boolean slidesWasFull = true;
         for (int i = 0; i < slides.length; i++) {
             if(slides[i] == null) {
                 slides[i] = slide;
+                slidesWasFull = false;
                 break;
             }
         }
         // TODO heu... ca risque de ne plus marcher si un jour on doit supprimer un élément du tableau => trou introduit
         // TODO quoi qu'on fait si pas de place vide ?
         // agrandir le tableau !
+
+        // dans le cas ou le tableau est déjà plein (on a pas rajouté notre élément dans le tableau)
+        if(slidesWasFull) {
+            int oldLength = slides.length;
+            // agrandir le tableau de CAPACITY
+            slides =  Arrays.copyOf(slides, slides.length + CAPACITY);
+            // ajoute un élément à la position oldSlides.length
+            slides[oldLength] = slide;
+        }
 
         numberOfSlides++;
     }

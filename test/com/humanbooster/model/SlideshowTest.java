@@ -24,10 +24,16 @@ public class SlideshowTest {
         // given
         Slideshow ss = new Slideshow();
         // when
-        ss.addSlide(new Slide());
-        ss.addSlide(new Slide());
+        Slide s0 = new Slide();
+        ss.addSlide(s0);
+        Slide s1 = new Slide();
+        ss.addSlide(s1);
         // test
         assertTrue("Il doit y avoir deux slides dans le slideshow", ss.getNumberOfSlides() == 2);
+        assertTrue("L'élément présent doit être celui que l'on a inséré",
+                ss.getSlideAtIndex(0).equals(s0));
+        assertTrue("L'élément présent doit être celui que l'on a inséré",
+                ss.getSlideAtIndex(1).equals(s1));
     }
 
     @Test
@@ -35,11 +41,22 @@ public class SlideshowTest {
         // given
         Slideshow ss = new Slideshow();
         // when
-        for (int i = 0; i < 11; i++) {
-            ss.addSlide(new Slide());
+        Slide[] slides = new Slide[Slideshow.CAPACITY * 5];
+        for (int i = 0; i < Slideshow.CAPACITY * 5; i++) {
+            slides[i] = new Slide();
+            ss.addSlide(slides[i]);
         }
         // test
-        assertTrue("Il doit y avoir 11 slides dans le slideshow", ss.getNumberOfSlides() == 11);
+        assertTrue("Il doit y avoir 11 slides dans le slideshow",
+                ss.getNumberOfSlides() == Slideshow.CAPACITY * 5 );
+        assertTrue("L'élément à la position 0 doit être celui que l'on a inséré",
+                ss.getSlideAtIndex(0).equals(slides[0]));
+        assertTrue("L'élément à la position 5 doit être celui que l'on a inséré",
+                ss.getSlideAtIndex(5).equals(slides[5]));
+        assertTrue("L'élément à la position Slideshow.CAPACITY doit être celui que l'on a inséré",
+                ss.getSlideAtIndex(Slideshow.CAPACITY).equals(slides[Slideshow.CAPACITY]));
+        assertTrue("L'élément à la position (Slideshow.CAPACITY * 5 - 1) doit être celui que l'on a inséré",
+                ss.getSlideAtIndex(Slideshow.CAPACITY * 5 - 1).equals(slides[Slideshow.CAPACITY * 5 - 1]));
     }
 
 
