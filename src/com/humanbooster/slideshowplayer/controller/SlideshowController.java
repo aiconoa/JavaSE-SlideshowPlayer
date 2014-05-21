@@ -12,8 +12,7 @@ import com.humanbooster.slideshowplayer.model.Slideshow;
  */
 public class SlideshowController {
     private int currentSlideIndex = -1;
-
-    private Slideshow slideshow;
+    private Slideshow slideshow = null;
 
     public Slideshow getSlideshow() {
         return slideshow;
@@ -25,14 +24,55 @@ public class SlideshowController {
     }
 
     /**
-     * Retourne le slide suivant.
-     * La position du slide courant dans le slideshow courant est incrémentée.
-     * @return
+     * Retourne le {@link com.humanbooster.slideshowplayer.model.Slide} suivant.
+     * <p>La position du slide courant dans le slideshow courant est incrémentée.</p>
+     *
+     * @return le slide suivant
+     *
+     * @throws java.lang.Exception si nextSlide est appelée alors qu'il n'y a pas de slideshow de chargé.
+     * @throws java.lang.Exception si nextSlide est appelée alors que le slideshow est vide.
      */
-    public Slide nextSlide() {
+    public Slide nextSlide() throws Exception {
+        if(slideshow == null) {
+            //TODO jetter une exception plus spécifique
+            throw new Exception("Cannot call nextSlide if no slideshow has been loaded");
+        }
+
+        if(slideshow.getNumberOfSlides() == 0) {
+            throw new Exception("Cannot call nextSlide if slideshow is empty");
+        }
+
+        if(currentSlideIndex == (slideshow.getNumberOfSlides() - 1)) {
+            throw new Exception("Cannot call nextSlide if the current slide is the last one");
+        }
+
         // incrémente l'indice du slide courant
         currentSlideIndex++;
         // retourne le slide à la position correspondante à cet index dans le slideshow
+        return slideshow.getSlideAtIndex(currentSlideIndex);
+    }
+
+    /**
+     * Retourne le slide courant.
+     *
+     * Si getCurrentSlide est appelée alors qu'il n'y a pas de slideshow de chargé alors
+     * une exception est jetée.
+     *
+     * Si getCurrentSlide est appelée alors qu'il n'y a pas de slideshow de chargé alors
+     * une exception est jetée.
+     *
+     * @return le slide courant.
+     */
+    public Slide getCurrentSlide() throws Exception {
+        if(slideshow == null) {
+            //TODO jetter une exception plus spécifique
+            throw new Exception("Cannot call getCurrentSlide if no slideshow has been loaded");
+        }
+
+        if(slideshow.getNumberOfSlides() == 0) {
+            throw new Exception("Cannot call getCurrentSlide if slideshow is empty");
+        }
+
         return slideshow.getSlideAtIndex(currentSlideIndex);
     }
 

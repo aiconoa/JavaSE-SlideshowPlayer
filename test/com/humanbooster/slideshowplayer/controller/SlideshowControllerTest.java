@@ -27,23 +27,91 @@ public class SlideshowControllerTest {
                     nextSlide.equals(s2));
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void nextSlideIfNoSlideshowHasBeenLoadedTest() throws Exception {
         //given
+        SlideshowController sc = new SlideshowController();
         //when
-
-        //then sera fait avec Thomas
+        sc.nextSlide();
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void nextSlideIfSlideshowIsEmptyTest() throws Exception {
+        //given
+        SlideshowController sc = new SlideshowController();
+        sc.setSlideshow(new Slideshow());
+        //when
+        sc.nextSlide();
+    }
 
+    @Test(expected = Exception.class)
+    public void nextSlideIfCurrentSlideIsTheLastSlideAndOnlyOneSlideTest() throws Exception {
+        //given
+        Slideshow ss = new Slideshow();
+        Slide s1 = new Slide();
+        ss.addSlide(s1);
+
+        SlideshowController sc = new SlideshowController();
+        sc.setSlideshow(ss);
+        //when
+        sc.nextSlide();
     }
 
     @Test
-    public void nextSlideIfCurrentSlideIsTheLastSlideTest() throws Exception {
+    public void getCurrentSlideTest() throws Exception {
+        //given
+        Slideshow ss = new Slideshow();
+        Slide s1 = new Slide();
+        ss.addSlide(s1);
 
+        SlideshowController sc = new SlideshowController();
+        sc.setSlideshow(ss);
+        //when
+        Slide currentSlide = sc.getCurrentSlide();
+        //test
+        assertTrue("Le slide courant est bien le slide numéro 1",
+                currentSlide.equals(s1));
     }
+
+    @Test(expected = Exception.class)
+    public void getCurrentSlideIfNoSlideshowHasBeenLoadedTest() throws Exception {
+        //given
+        SlideshowController sc = new SlideshowController();
+        //when
+        sc.getCurrentSlide();
+    }
+
+    @Test(expected = Exception.class)
+    public void getCurrentSlideIfSlideshowIsEmptyTest() throws Exception {
+        //given
+        SlideshowController sc = new SlideshowController();
+        sc.setSlideshow(new Slideshow());
+        //when
+        sc.getCurrentSlide();
+    }
+
+    @Test
+    public void getCurrentSlideAfterNextSlideTest() throws Exception {
+        //given
+        Slide[] slides = new Slide[Slideshow.CAPACITY];
+        Slideshow ss = new Slideshow();
+        for (int i = 0; i < Slideshow.CAPACITY; i++) {
+            slides[i] = new Slide();
+            ss.addSlide(slides[i]);
+        }
+
+        SlideshowController sc = new SlideshowController();
+        sc.setSlideshow(ss);
+
+        for (int i = 1; i < Slideshow.CAPACITY; i++) {
+            //when
+            sc.nextSlide();
+            Slide currentSlide = sc.getCurrentSlide();
+            //then
+            assertTrue("Slide at index " + i + " must be " + slides[i], currentSlide == slides[i]);
+        }
+    }
+
 
 
     //TODO tester nextSlide en positionnant le slide courant au milieu
