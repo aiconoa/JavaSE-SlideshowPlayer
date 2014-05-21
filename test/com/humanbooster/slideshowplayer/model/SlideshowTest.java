@@ -30,7 +30,7 @@ public class SlideshowTest {
         ss.addSlide(s0);
         Slide s1 = new Slide();
         ss.addSlide(s1);
-        // test
+        // then
         assertTrue("Il doit y avoir deux slides dans le slideshow", ss.getNumberOfSlides() == 2);
         assertTrue("L'élément présent doit être celui que l'on a inséré",
                 ss.getSlideAtIndex(0).equals(s0));

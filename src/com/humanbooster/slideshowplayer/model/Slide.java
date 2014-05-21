@@ -1,8 +1,8 @@
 package com.humanbooster.slideshowplayer.model;
 
 /**
- * Un slide d'un Slideshow
- * Un Slide contient une liste de SlideElements
+ * Un slide d'un {@link Slideshow}.
+ * <p>Un Slide contient une liste de SlideElement.</p>
  */
 public class Slide {
 }

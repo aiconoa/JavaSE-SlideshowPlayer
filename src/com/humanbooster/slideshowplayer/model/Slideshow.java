@@ -3,11 +3,14 @@ package com.humanbooster.slideshowplayer.model;
 import java.util.Arrays;
 
 /**
- * Représente un document Slideshow.
- * Un slideshow contient une collection de slides
+ * Représente un document de type slideshow (diaporama).
+ * <p>Un slideshow contient une collection de {@link Slide}.</p>
  */
 public class Slideshow {
 
+    /**
+     * Capacité par défaut du Slideshow
+     */
     public static final int CAPACITY = 10;
 
     private Slide[] slides;
@@ -21,7 +24,7 @@ public class Slideshow {
 
     /**
      * Ajoute un slide dans le Slideshow à la première place libre
-     * @param slide a ajouter dans le Slideshow
+     * @param slide le slide a ajouter dans le Slideshow
      */
     public void addSlide(Slide slide) {
         // TODO attention trous dans le tableau (par exemple via suppression) alors
@@ -46,7 +49,7 @@ public class Slideshow {
 
     /**
      * Retourne le nombre de Slide présents dans le Slideshow
-     * @return int nombre de Slide dans le Slideshow
+     * @return le nombre de Slide dans le Slideshow
      */
     public int getNumberOfSlides() {
         return numberOfSlides;
@@ -55,7 +58,7 @@ public class Slideshow {
     /**
      * Retourne le Slide a la position index dans le Slideshow
      * @param index l'index du Slide dans le Slideshow
-     * @return Slide le slide à l'index donné
+     * @return le slide à l'index donné
      */
     public Slide getSlideAtIndex(int index) {
         // TODO vérifier que index est dans les bornes du tableau
