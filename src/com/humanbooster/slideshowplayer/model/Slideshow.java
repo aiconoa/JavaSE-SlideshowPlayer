@@ -1,6 +1,7 @@
 package com.humanbooster.slideshowplayer.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Représente un document de type slideshow (diaporama).
@@ -18,12 +19,11 @@ public class Slideshow {
     /**
      * Ajoute un slide dans le Slideshow à la fin
      * @param slide le slide a ajouter dans le Slideshow
+     *
+     * @throws java.lang.NullPointerException si slide est {@code null}
      */
     public void addSlide(Slide slide) {
-        //TODO écrire le test unitaire
-        if(slide == null) { // TODO Java Objects.isNull
-            throw new NullPointerException("slide cannot be null");
-        }
+        Objects.requireNonNull(slide, "Cannot add a null Slide");
         slides.add(slide);
     }
 

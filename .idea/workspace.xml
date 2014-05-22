@@ -59,8 +59,20 @@
       <file leaf-file-name="Slideshow.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/humanbooster/slideshowplayer/model/Slideshow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3319838" vertical-offset="411" max-vertical-offset="1450">
-              <caret line="23" column="55" selection-start-line="23" selection-start-column="55" selection-end-line="23" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.58502024" vertical-offset="311" max-vertical-offset="1450">
+              <caret line="24" column="39" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Objects.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_05/src.zip!/java/util/Objects.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4536" max-vertical-offset="6450">
+              <caret line="227" column="42" selection-start-line="227" selection-start-column="22" selection-end-line="227" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -718,12 +730,12 @@
       <created>1400585731875</created>
       <updated>1400585731875</updated>
       <workItem from="1400585733861" duration="87000" />
-      <workItem from="1400585824029" duration="43686000" />
+      <workItem from="1400585824029" duration="44368000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43773000" />
+    <option name="totallyTimeSpent" value="44455000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1067,11 +1079,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_05/src.zip!/java/util/Objects.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4536" max-vertical-offset="6450">
+          <caret line="227" column="42" selection-start-line="227" selection-start-column="22" selection-end-line="227" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/humanbooster/slideshowplayer/model/Slideshow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3319838" vertical-offset="411" max-vertical-offset="1450">
-          <caret line="23" column="55" selection-start-line="23" selection-start-column="55" selection-end-line="23" selection-end-column="55" />
-          <folding />
+        <state vertical-scroll-proportion="0.58502024" vertical-offset="311" max-vertical-offset="1450">
+          <caret line="24" column="39" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
