@@ -39,15 +39,15 @@ public class Slideshow {
      * Retourne le Slide a la position index dans le Slideshow
      * @param index l'index du Slide dans le Slideshow
      * @return le slide à l'index donné
-     * @throws SlideshowOutOfBoundsException if the index is out of range (index < 0 || index >= getNumberOfSlides())
+     * @throws SlideshowIndexOutOfBoundsException if the index is out of range (index < 0 || index >= getNumberOfSlides())
      */
-    public Slide getSlideAtIndex(int index) throws SlideshowOutOfBoundsException {
+    public Slide getSlideAtIndex(int index) {
         if(index < 0) {
-            throw new SlideshowOutOfBoundsException("the index is out of range (index < 0)");
+            throw new SlideshowIndexOutOfBoundsException("the index is out of range (index < 0)");
         }
 
         if(index >= slides.size()) {
-            throw new SlideshowOutOfBoundsException("the index is out of range (index >= getNumberOfSlides())");
+            throw new SlideshowIndexOutOfBoundsException("the index is out of range (index >= getNumberOfSlides())");
         }
 
         return slides.get(index);

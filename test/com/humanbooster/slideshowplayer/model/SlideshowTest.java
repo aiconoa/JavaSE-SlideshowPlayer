@@ -1,8 +1,5 @@
 package com.humanbooster.slideshowplayer.model;
 
-import com.humanbooster.slideshowplayer.controller.SlideshowController;
-import com.humanbooster.slideshowplayer.model.Slide;
-import com.humanbooster.slideshowplayer.model.Slideshow;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -39,7 +36,7 @@ public class SlideshowTest {
                 ss.getSlideAtIndex(1).equals(s1));
     }
 
-    @Test(expected = SlideshowOutOfBoundsException.class)
+    @Test(expected = SlideshowIndexOutOfBoundsException.class)
     public void getSlideAtIndexWithNegativeIndexTest() throws Exception {
         //given
         Slideshow ss = new Slideshow();
@@ -47,11 +44,19 @@ public class SlideshowTest {
         ss.getSlideAtIndex(-1);
     }
 
-    @Test(expected = SlideshowOutOfBoundsException.class)
+    @Test(expected = SlideshowIndexOutOfBoundsException.class)
     public void getSlideAtIndexWithTooBigIndexTest() throws Exception {
         //given
         Slideshow ss = new Slideshow();
         //when
         ss.getSlideAtIndex(ss.getNumberOfSlides());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void addSlideWithNullSlideTest() throws Exception {
+        //given
+        Slideshow ss = new Slideshow();
+        //when
+        ss.addSlide(null);
     }
 }
