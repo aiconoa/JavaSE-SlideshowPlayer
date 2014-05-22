@@ -4,6 +4,8 @@ import com.humanbooster.slideshowplayer.model.Slide;
 import com.humanbooster.slideshowplayer.model.Slideshow;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class SlideshowControllerTest {
@@ -93,25 +95,24 @@ public class SlideshowControllerTest {
     @Test
     public void getCurrentSlideAfterNextSlideTest() throws Exception {
         //given
-        Slide[] slides = new Slide[Slideshow.CAPACITY];
+        ArrayList<Slide> slides = new ArrayList<>();
         Slideshow ss = new Slideshow();
-        for (int i = 0; i < Slideshow.CAPACITY; i++) {
-            slides[i] = new Slide();
-            ss.addSlide(slides[i]);
+        for (int i = 0; i < 10; i++) {
+            slides.add(new Slide());
+            ss.addSlide(slides.get(i));
         }
 
         SlideshowController sc = new SlideshowController();
         sc.setSlideshow(ss);
 
-        for (int i = 1; i < Slideshow.CAPACITY; i++) {
+        for (int i = 1; i < slides.size(); i++) {
             //when
             sc.nextSlide();
             Slide currentSlide = sc.getCurrentSlide();
             //then
-            assertTrue("Slide at index " + i + " must be " + slides[i], currentSlide == slides[i]);
+            assertTrue("Slide at index " + i + " must be " + slides.get(i), currentSlide ==  slides.get(i));
         }
     }
-
 
 
     //TODO tester nextSlide en positionnant le slide courant au milieu

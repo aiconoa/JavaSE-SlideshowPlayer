@@ -1,6 +1,6 @@
 package com.humanbooster.slideshowplayer.model;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  * Représente un document de type slideshow (diaporama).
@@ -8,43 +8,23 @@ import java.util.Arrays;
  */
 public class Slideshow {
 
-    /**
-     * Capacité par défaut du Slideshow
-     */
-    public static final int CAPACITY = 10;
-
-    private Slide[] slides;
-
-    private int numberOfSlides;
+    private ArrayList<Slide> slides;
 
     public Slideshow() {
-        numberOfSlides = 0;
-        slides = new Slide[CAPACITY];
+        // Type inference
+        slides = new ArrayList<>();
     }
 
     /**
-     * Ajoute un slide dans le Slideshow à la première place libre
+     * Ajoute un slide dans le Slideshow à la fin
      * @param slide le slide a ajouter dans le Slideshow
      */
     public void addSlide(Slide slide) {
-        // TODO attention trous dans le tableau (par exemple via suppression) alors
-        // on risque d'introduire un élément ailleurs qu'à la fin
-
-        for (int i = 0; i < slides.length; i++) {
-            if(slides[i] == null) {
-                slides[i] = slide;
-                numberOfSlides++;
-                return;
-            }
+        //TODO écrire le test unitaire
+        if(slide == null) { // TODO Java Objects.isNull
+            throw new NullPointerException("slide cannot be null");
         }
-
-        // dans le cas ou le tableau est déjà plein (on a pas rajouté notre élément dans le tableau)
-        int oldLength = slides.length;
-        // agrandir le tableau de CAPACITY
-        slides =  Arrays.copyOf(slides, slides.length + CAPACITY);
-        // ajoute un élément à la position oldSlides.length
-        slides[oldLength] = slide;
-        numberOfSlides++;
+        slides.add(slide);
     }
 
     /**
@@ -52,18 +32,24 @@ public class Slideshow {
      * @return le nombre de Slide dans le Slideshow
      */
     public int getNumberOfSlides() {
-        return numberOfSlides;
+        return slides.size();
     }
 
     /**
      * Retourne le Slide a la position index dans le Slideshow
      * @param index l'index du Slide dans le Slideshow
      * @return le slide à l'index donné
+     * @throws SlideshowOutOfBoundsException if the index is out of range (index < 0 || index >= getNumberOfSlides())
      */
-    public Slide getSlideAtIndex(int index) {
-        // TODO vérifier que index est dans les bornes du tableau
-        // TODO heu... ca risque de ne plus marcher si un jour
-        // on doit supprimer un élément du tableau => trou introduit
-        return slides[index];
+    public Slide getSlideAtIndex(int index) throws SlideshowOutOfBoundsException {
+        if(index < 0) {
+            throw new SlideshowOutOfBoundsException("the index is out of range (index < 0)");
+        }
+
+        if(index >= slides.size()) {
+            throw new SlideshowOutOfBoundsException("the index is out of range (index >= getNumberOfSlides())");
+        }
+
+        return slides.get(index);
     }
 }

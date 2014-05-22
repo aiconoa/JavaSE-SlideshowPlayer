@@ -1,5 +1,6 @@
 package com.humanbooster.slideshowplayer.model;
 
+import com.humanbooster.slideshowplayer.controller.SlideshowController;
 import com.humanbooster.slideshowplayer.model.Slide;
 import com.humanbooster.slideshowplayer.model.Slideshow;
 import org.junit.Test;
@@ -38,30 +39,19 @@ public class SlideshowTest {
                 ss.getSlideAtIndex(1).equals(s1));
     }
 
-    @Test
-    public void elevenSlidesTest()  throws Exception {
-        // given
+    @Test(expected = SlideshowOutOfBoundsException.class)
+    public void getSlideAtIndexWithNegativeIndexTest() throws Exception {
+        //given
         Slideshow ss = new Slideshow();
-        // when
-        Slide[] slides = new Slide[Slideshow.CAPACITY * 5];
-        for (int i = 0; i < Slideshow.CAPACITY * 5; i++) {
-            slides[i] = new Slide();
-            ss.addSlide(slides[i]);
-        }
-        // test
-        assertTrue("Il doit y avoir 11 slides dans le slideshow",
-                ss.getNumberOfSlides() == Slideshow.CAPACITY * 5 );
-        assertTrue("L'élément à la position 0 doit être celui que l'on a inséré",
-                ss.getSlideAtIndex(0).equals(slides[0]));
-        assertTrue("L'élément à la position 5 doit être celui que l'on a inséré",
-                ss.getSlideAtIndex(5).equals(slides[5]));
-        assertTrue("L'élément à la position Slideshow.CAPACITY doit être celui que l'on a inséré",
-                ss.getSlideAtIndex(Slideshow.CAPACITY).equals(slides[Slideshow.CAPACITY]));
-        assertTrue("L'élément à la position (Slideshow.CAPACITY * 5 - 1) doit être celui que l'on a inséré",
-                ss.getSlideAtIndex(Slideshow.CAPACITY * 5 - 1).equals(slides[Slideshow.CAPACITY * 5 - 1]));
+        //when
+        ss.getSlideAtIndex(-1);
     }
 
-
-    // TODO ajouter un test ou le slideshow a deja des slides au départ
-    // TODO ajouter un test qui dépasse la capacité initiale du tableau
+    @Test(expected = SlideshowOutOfBoundsException.class)
+    public void getSlideAtIndexWithTooBigIndexTest() throws Exception {
+        //given
+        Slideshow ss = new Slideshow();
+        //when
+        ss.getSlideAtIndex(ss.getNumberOfSlides());
+    }
 }

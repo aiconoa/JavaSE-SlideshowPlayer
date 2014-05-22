@@ -15,10 +15,8 @@ public class Main {
         // créer un slideshow
         Slideshow ss = new Slideshow();
         // ajouter 10 slides
-        Slide[] slides = new Slide[Slideshow.CAPACITY * 5];
-        for (int i = 0; i < Slideshow.CAPACITY * 5; i++) {
-            slides[i] = new Slide();
-            ss.addSlide(slides[i]);
+        for (int i = 0; i < 10; i++) {
+            ss.addSlide(new Slide());
         }
 
         SlideshowController sc = new SlideshowController();
@@ -44,7 +42,6 @@ public class Main {
                 //System.out.println(s);
                 // affiche le slide
             }
-
 
         } while(! QUIT.equals(input)); // tant que l'utilisateur n'a pas tappé "quit"
 
