@@ -2,6 +2,7 @@ package com.humanbooster.slideshowplayer.main;
 
 import com.humanbooster.slideshowplayer.controller.SlideshowController;
 import com.humanbooster.slideshowplayer.model.Slide;
+import com.humanbooster.slideshowplayer.model.SlideElement;
 import com.humanbooster.slideshowplayer.model.Slideshow;
 
 import java.util.Scanner;
@@ -16,7 +17,17 @@ public class Main {
         Slideshow ss = new Slideshow();
         // ajouter 10 slides
         for (int i = 0; i < 10; i++) {
-            ss.addSlide(new Slide());
+            Slide s = new Slide();
+
+            SlideElement title = new SlideElement();
+            title.setX(0.1); // (largeur totale (1.0) - largeur élément (0.8)) / 2
+            title.setY(0.4); // (hauteur totale (1.0) - hauteur élément (0.2)) / 2
+            title.setWidth(0.80);
+            title.setHeight(0.2);
+            title.setContent("Slide " + i);
+
+            s.addSlideElement(title);
+            ss.addSlide(s);
         }
 
         SlideshowController sc = new SlideshowController();

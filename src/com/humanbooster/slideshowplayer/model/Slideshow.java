@@ -11,9 +11,25 @@ public class Slideshow {
 
     private ArrayList<Slide> slides;
 
+    /**
+     * Largeur des slides du Slideshow en mm
+     */
+    private int width;
+
+    /**
+     * Hauteur des slides du Slideshow en mm
+     */
+    private int height;
+
     public Slideshow() {
+        this(297, 210);
+    }
+
+    public Slideshow(int width, int height) {
         // Type inference
         slides = new ArrayList<>();
+        this.width = width;
+        this.height = height;
     }
 
     /**
