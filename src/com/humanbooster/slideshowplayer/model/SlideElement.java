@@ -6,70 +6,21 @@ package com.humanbooster.slideshowplayer.model;
  * entre 0 et 100%.
  * Il est possible d'avoir une taille supérieure à 1, cad supérieure 100% de la taille du Slide
  */
-public class SlideElement {
+public interface SlideElement {
 
-    /**
-     * Coordonnée x du coin haut gauche du SlideElement
-     */
-    private double x;
+    public double getX();
 
-    /**
-     * Coordonnée y du coin haut gauche du SlideElement
-     */
-    private double y;
+    public void setX(double x);
 
-    /**
-     * Largeur exprimée en pourcentage de la largeur du slide parent (supérieure à 0)
-     */
-    private double width;
+    public double getY();
 
-    /**
-     * Hauteur exprimée en pourcentage de la hauteur du slide parent (supérieure à 0)
-     */
-    private double height;
+    public void setY(double y);
 
-    /**
-     * Contenu du SlideElement
-     */
-    private Object content;
+    public double getWidth();
 
-    public double getX() {
-        return x;
-    }
+    public void setWidth(double width);
 
-    public void setX(double x) {
-        this.x = x;
-    }
+    public double getHeight();
 
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
-    }
-
-    public Object getContent() {
-        return content;
-    }
-
-    public void setContent(Object content) {
-        this.content = content;
-    }
+    public void setHeight(double height);
 }

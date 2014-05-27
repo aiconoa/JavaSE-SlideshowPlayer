@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class Slide {
 
-    private HashSet<SlideElement> slideElements = new HashSet<>();
+    private Set<SlideElement> slideElements = new HashSet<>();
 
     public Set<SlideElement> getSlideElements() {
         return Collections.unmodifiableSet(slideElements);
@@ -28,4 +28,20 @@ public class Slide {
         slideElements.add(se);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getCanonicalName())
+          .append("{")
+          .append(System.lineSeparator());
+
+        for (SlideElement slideElement : slideElements) {
+            sb.append("\t")
+              .append(slideElement)
+              .append(System.lineSeparator());
+        }
+
+        sb.append("}");
+        return sb.toString();
+    }
 }
