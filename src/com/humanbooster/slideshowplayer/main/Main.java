@@ -9,6 +9,9 @@ public class Main {
     public static final String QUIT = "quit";
     public static final String NEXT = "next";
     public static final String SHOW = "show";
+    public static final String PLAY = "play";
+    public static final String PAUSE = "pause";
+    public static final String STOP = "stop";
 
     public static void main(String[] args) {
         // créer un slideshow
@@ -51,6 +54,21 @@ public class Main {
                 //Slide s = sc.getCurrentSlide();
                 //System.out.println(s);
                 // affiche le slide
+            }
+
+            if(PLAY.equals(input)) {
+                // démarrer (ou reprendre) la lecture automatique
+                    // = parler à quelqu'un qui
+                    // toutes les X secondes doit déclencher l'affichage
+                    // du slide suivant
+            }
+
+            if(PAUSE.equals(input)) {
+                // mettre en pause
+            }
+
+            if(STOP.equals(input)) {
+                // arreter la lecture automatique et revenir au premier slide
             }
 
         } while(! QUIT.equals(input)); // tant que l'utilisateur n'a pas tappé "quit"

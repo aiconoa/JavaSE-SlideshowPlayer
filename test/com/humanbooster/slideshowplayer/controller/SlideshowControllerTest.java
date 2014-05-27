@@ -114,6 +114,44 @@ public class SlideshowControllerTest {
         }
     }
 
+    @Test
+    public void play() throws Exception {
+        //given
+        ArrayList<Slide> slides = new ArrayList<>();
+        Slideshow ss = new Slideshow();
+        for (int i = 0; i < 10; i++) {
+            slides.add(new Slide());
+            ss.addSlide(slides.get(i));
+        }
+
+        SlideshowController sc = new SlideshowController();
+        sc.setSlideshow(ss);
+
+        CurrentSlideChangedListener listener = new CurrentSlideChangedListener() {
+            private int expectedCurrentSlideIndex = 0;
+            @Override
+            public void currentSlideChanged(SlideshowController source, Slide oldSlide, Slide newSlide) {
+                expectedCurrentSlideIndex++;
+                // Then
+                // vérifier que le nouveau slide est bien le slide suivant
+                assertEquals("Le slide suivant attendu est " + slides.get(expectedCurrentSlideIndex)
+                            , slides.get(expectedCurrentSlideIndex), newSlide);
+
+                // si on veut vérifier l'appel toutes les X secondes, conserver un timestamp de l'appel
+                // précédent et vérifier si il s'est passé moins de X secondes + DeltaTemps entre l'ancien
+                // appel et le nouvel appel.
+
+            }
+        };
+        sc.addSlideChangedListener(listener);
+
+        //when
+        sc.play();
+
+        //TODO ici on ne teste pas que l'on est passé sur tous les slides... on pourrait écrire un autre slide
+    }
+
+
 
     //TODO tester nextSlide en positionnant le slide courant au milieu
     //TODO tester nextSlide en positionnant le slide à la fin au milieu
