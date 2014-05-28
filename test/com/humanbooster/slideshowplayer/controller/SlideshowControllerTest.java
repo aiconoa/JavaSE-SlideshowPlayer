@@ -10,6 +10,8 @@ import static org.junit.Assert.*;
 
 public class SlideshowControllerTest {
 
+    int totalSlideChanged = 0; // TODO reseter cette variable avant chaque test
+
     @Test
     public void nextSlideTest() throws Exception {
         //given
@@ -132,6 +134,7 @@ public class SlideshowControllerTest {
             @Override
             public void currentSlideChanged(SlideshowController source, Slide oldSlide, Slide newSlide) {
                 expectedCurrentSlideIndex++;
+                totalSlideChanged++;
                 // Then
                 // vérifier que le nouveau slide est bien le slide suivant
                 assertEquals("Le slide suivant attendu est " + slides.get(expectedCurrentSlideIndex)
@@ -143,12 +146,19 @@ public class SlideshowControllerTest {
 
             }
         };
-        sc.addSlideChangedListener(listener);
+
+        sc.addCurrentSlideChangedListener(listener);
 
         //when
         sc.play();
 
-        //TODO ici on ne teste pas que l'on est passé sur tous les slides... on pourrait écrire un autre slide
+        // on estime que le diaporama doit avoir défilé après un temps egal à
+        // nb_slides * frequence de changement du slide * marge d'erreur
+        Thread.sleep(10 * 1000 * 2);
+
+        // quand le diaporama est censé avoir fini de défiler, on vérifie que l'on a bien parcouru toutes
+        // les slides
+        assertEquals("on doit avoir traversé 10 slides", 10, totalSlideChanged + 1);
     }
 
 

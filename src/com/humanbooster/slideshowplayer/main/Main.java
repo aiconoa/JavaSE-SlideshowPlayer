@@ -2,6 +2,7 @@ package com.humanbooster.slideshowplayer.main;
 
 import com.humanbooster.slideshowplayer.controller.SlideshowController;
 import com.humanbooster.slideshowplayer.model.*;
+import com.humanbooster.slideshowplayer.view.ConsoleView;
 
 import java.util.Scanner;
 
@@ -35,6 +36,9 @@ public class Main {
         SlideshowController sc = new SlideshowController();
         sc.setSlideshow(ss);
 
+        ConsoleView view = new ConsoleView();
+        sc.addCurrentSlideChangedListener(view);
+
         Scanner scanner = new Scanner(System.in);
 
         String input = null;
@@ -43,8 +47,7 @@ public class Main {
             if(NEXT.equals(input)) { // si l'utilisateur tappe "suivant" => aller au slide suivant
                 // essayons d'appeller cette méthode
                 try {
-                    Slide s = sc.nextSlide();
-                    System.out.println(s);
+                    sc.nextSlide();
                 } catch(Exception e) { // si jamais il y a une erreur
                     System.out.println(e.getMessage());
                 }
@@ -57,10 +60,11 @@ public class Main {
             }
 
             if(PLAY.equals(input)) {
-                // démarrer (ou reprendre) la lecture automatique
-                    // = parler à quelqu'un qui
-                    // toutes les X secondes doit déclencher l'affichage
-                    // du slide suivant
+                try {
+                    sc.play();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             if(PAUSE.equals(input)) {
