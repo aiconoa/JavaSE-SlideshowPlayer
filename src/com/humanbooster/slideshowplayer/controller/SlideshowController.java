@@ -27,6 +27,10 @@ public class SlideshowController {
         currentSlideIndex = 0;
     }
 
+    public int getTransitionTimeBetweenSlides() {
+        return transitionTimeBetweenSlides;
+    }
+
     /**
      * Retourne le {@link com.humanbooster.slideshowplayer.model.Slide} suivant.
      * <p>La position du slide courant dans le slideshow courant est incrémentée.</p>

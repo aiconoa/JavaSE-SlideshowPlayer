@@ -5,12 +5,11 @@ import com.humanbooster.slideshowplayer.model.Slideshow;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.*;
 
 public class SlideshowControllerTest {
-
-    int totalSlideChanged = 0; // TODO reseter cette variable avant chaque test
 
     @Test
     public void nextSlideTest() throws Exception {
@@ -121,24 +120,24 @@ public class SlideshowControllerTest {
         //given
         ArrayList<Slide> slides = new ArrayList<>();
         Slideshow ss = new Slideshow();
-        for (int i = 0; i < 10; i++) {
+        int numberOfSlides = 10;
+        for (int i = 0; i < numberOfSlides; i++) {
             slides.add(new Slide());
             ss.addSlide(slides.get(i));
         }
 
         SlideshowController sc = new SlideshowController();
         sc.setSlideshow(ss);
+        AtomicInteger totalSlideChanged = new AtomicInteger(0);
 
         CurrentSlideChangedListener listener = new CurrentSlideChangedListener() {
-            private int expectedCurrentSlideIndex = 0;
             @Override
             public void currentSlideChanged(SlideshowController source, Slide oldSlide, Slide newSlide) {
-                expectedCurrentSlideIndex++;
-                totalSlideChanged++;
+                totalSlideChanged.incrementAndGet();
                 // Then
                 // vérifier que le nouveau slide est bien le slide suivant
-                assertEquals("Le slide suivant attendu est " + slides.get(expectedCurrentSlideIndex)
-                            , slides.get(expectedCurrentSlideIndex), newSlide);
+                assertEquals("Le slide suivant attendu est " + slides.get(totalSlideChanged.get())
+                            , slides.get(totalSlideChanged.get()), newSlide);
 
                 // si on veut vérifier l'appel toutes les X secondes, conserver un timestamp de l'appel
                 // précédent et vérifier si il s'est passé moins de X secondes + DeltaTemps entre l'ancien
@@ -154,11 +153,12 @@ public class SlideshowControllerTest {
 
         // on estime que le diaporama doit avoir défilé après un temps egal à
         // nb_slides * frequence de changement du slide * marge d'erreur
-        Thread.sleep(10 * 1000 * 2);
+        int deltaInMS = 1500;
+        Thread.sleep(numberOfSlides * sc.getTransitionTimeBetweenSlides() + deltaInMS);
 
         // quand le diaporama est censé avoir fini de défiler, on vérifie que l'on a bien parcouru toutes
         // les slides
-        assertEquals("on doit avoir traversé 10 slides", 10, totalSlideChanged + 1);
+        assertEquals("on doit avoir traversé " + numberOfSlides + " slides", numberOfSlides, totalSlideChanged.get() + 1);
     }
 
 
