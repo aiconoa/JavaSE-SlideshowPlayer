@@ -137,6 +137,7 @@ public class SlideshowControllerTest {
         int transitionTimeBetweenSlides = 100; //ms
         sc.setTransitionTimeBetweenSlides(transitionTimeBetweenSlides);
         sc.setSlideshow(ss);
+
         AtomicInteger totalSlideChanged = new AtomicInteger(0);
 
         CurrentSlideChangedListener listener = new CurrentSlideChangedListener() {
@@ -160,6 +161,8 @@ public class SlideshowControllerTest {
         //when
         sc.play();
 
+        assertEquals("Le slideshow controller doit être en status PLAYING", SlideshowController.STATUS.PLAYING, sc.getStatus());
+
         // on estime que le diaporama doit avoir défilé après un temps egal à
         // nb_slides * frequence de changement du slide + marge d'erreur
         int deltaInMS = 1500;
@@ -170,5 +173,56 @@ public class SlideshowControllerTest {
         assertEquals("on doit avoir traversé " + numberOfSlides + " slides", numberOfSlides, totalSlideChanged.get() + 1);
     }
 
-    
+
+    @Test
+    public void pause() throws Exception {
+        //given
+        ArrayList<Slide> slides = new ArrayList<>();
+        Slideshow ss = new Slideshow();
+        int numberOfSlides = 10;
+        for (int i = 0; i < numberOfSlides; i++) {
+            slides.add(new Slide());
+            ss.addSlide(slides.get(i));
+        }
+
+        SlideshowController sc = new SlideshowController();
+
+        int transitionTimeBetweenSlides = 100; //ms
+        sc.setTransitionTimeBetweenSlides(transitionTimeBetweenSlides);
+        sc.setSlideshow(ss);
+
+        sc.play();
+
+        Thread.sleep(transitionTimeBetweenSlides * 5); // Optionnel: laisser le test se dérouler un peu
+        sc.pause();
+        Slide slideAfterPause = sc.getCurrentSlide();
+        Thread.sleep(1000);
+        Slide slideAfterPauseAndSleep = sc.getCurrentSlide();
+
+        assertEquals("Le slideshow controller doit être en status PAUSED",
+                SlideshowController.STATUS.PAUSED,
+                sc.getStatus());
+        assertEquals("Le slideshow ne doit plus defiler apres la pause", slideAfterPause, slideAfterPauseAndSleep);
+    }
+
+    @Test(expected = SlideshowControllerStatusException.class)
+    public void pauseWithoutPlay() throws Exception {
+        //given
+        ArrayList<Slide> slides = new ArrayList<>();
+        Slideshow ss = new Slideshow();
+        int numberOfSlides = 10;
+        for (int i = 0; i < numberOfSlides; i++) {
+            slides.add(new Slide());
+            ss.addSlide(slides.get(i));
+        }
+
+        SlideshowController sc = new SlideshowController();
+
+        int transitionTimeBetweenSlides = 100; //ms
+        sc.setTransitionTimeBetweenSlides(transitionTimeBetweenSlides);
+        sc.setSlideshow(ss);
+
+        sc.pause();
+    }
+
 }

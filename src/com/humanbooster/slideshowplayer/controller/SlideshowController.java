@@ -13,10 +13,17 @@ import java.util.*;
  * Lors du chargement d'un slideshow le slide courant est le premier slide du slideshow.
  */
 public class SlideshowController {
+
+    public static enum STATUS { PLAYING, PAUSED, STOPPED };
+
+    private STATUS status = STATUS.STOPPED;
+
     private int transitionTimeBetweenSlides = 1000;
     private int currentSlideIndex = -1;
     private Slideshow slideshow = null;
     private List<CurrentSlideChangedListener> currentSlideChangedListeners = new ArrayList<>();
+
+    private TimerTask currentTask;
 
     public Slideshow getSlideshow() {
         return slideshow;
@@ -25,6 +32,10 @@ public class SlideshowController {
     public void setSlideshow(Slideshow slideshow) {
         this.slideshow = slideshow;
         currentSlideIndex = 0;
+    }
+
+    public STATUS getStatus() {
+        return status;
     }
 
     public int getTransitionTimeBetweenSlides() {
@@ -119,7 +130,7 @@ public class SlideshowController {
         requireSlideshowNotEmpty("Cannot call play if slideshow is empty");
 
         Timer t = new Timer();
-        t.schedule(new TimerTask() {
+        currentTask = new TimerTask() {
             @Override
             public void run() {
                 if(SlideshowController.this.slideshow.getNumberOfSlides() - 1
@@ -138,7 +149,25 @@ public class SlideshowController {
                      e.printStackTrace(); //TODO logger l'exception
                  }
             }
-        }, 0, transitionTimeBetweenSlides);
+        };
+
+        this.status = STATUS.PLAYING;
+        t.schedule(currentTask, 0, transitionTimeBetweenSlides);
+    }
+
+
+    /**
+     * Stoppe le défilement automatique du diaporama
+     *
+     * @throws com.humanbooster.slideshowplayer.controller.SlideshowControllerStatusException si le SlideshowController n'est pas en mode play
+     */
+    public void pause() throws SlideshowControllerStatusException {
+        if(! STATUS.PLAYING.equals(this.status)) {
+            throw new SlideshowControllerStatusException("Cannot call pause if SlideshowController is now playing");
+        }
+        currentTask.cancel(); //TODO si pas play => pas currentTask => NPE
+
+        this.status = STATUS.PAUSED;
     }
 
 }
