@@ -11,6 +11,12 @@ import static org.junit.Assert.*;
 
 public class SlideshowControllerTest {
 
+    //TODO tester nextSlide en positionnant le slide courant au milieu
+    //TODO tester nextSlide en positionnant le slide à la fin au milieu
+
+    //TODO tester nextSlide avec un slideshow vide
+    //TODO tester nextSlide si trou dans l'ordre du slideshow
+
     @Test
     public void nextSlideTest() throws Exception {
         //given
@@ -127,6 +133,9 @@ public class SlideshowControllerTest {
         }
 
         SlideshowController sc = new SlideshowController();
+
+        int transitionTimeBetweenSlides = 100; //ms
+        sc.setTransitionTimeBetweenSlides(transitionTimeBetweenSlides);
         sc.setSlideshow(ss);
         AtomicInteger totalSlideChanged = new AtomicInteger(0);
 
@@ -152,7 +161,7 @@ public class SlideshowControllerTest {
         sc.play();
 
         // on estime que le diaporama doit avoir défilé après un temps egal à
-        // nb_slides * frequence de changement du slide * marge d'erreur
+        // nb_slides * frequence de changement du slide + marge d'erreur
         int deltaInMS = 1500;
         Thread.sleep(numberOfSlides * sc.getTransitionTimeBetweenSlides() + deltaInMS);
 
@@ -161,11 +170,5 @@ public class SlideshowControllerTest {
         assertEquals("on doit avoir traversé " + numberOfSlides + " slides", numberOfSlides, totalSlideChanged.get() + 1);
     }
 
-
-
-    //TODO tester nextSlide en positionnant le slide courant au milieu
-    //TODO tester nextSlide en positionnant le slide à la fin au milieu
-
-    //TODO tester nextSlide avec un slideshow vide
-    //TODO tester nextSlide si trou dans l'ordre du slideshow
+    
 }

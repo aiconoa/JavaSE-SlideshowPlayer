@@ -31,6 +31,12 @@ public class SlideshowController {
         return transitionTimeBetweenSlides;
     }
 
+    public void setTransitionTimeBetweenSlides(int transitionTimeBetweenSlides) {
+        //TODO what happends if we call this method while playing ?
+        // should it reset the timer ?
+        this.transitionTimeBetweenSlides = transitionTimeBetweenSlides;
+    }
+
     /**
      * Retourne le {@link com.humanbooster.slideshowplayer.model.Slide} suivant.
      * <p>La position du slide courant dans le slideshow courant est incrémentée.</p>
