@@ -184,6 +184,9 @@ public class SlideshowController {
         if(currentTask != null) { // cas ou on a jamais fait PLAY ou que le status est PAUSED.
             currentTask.cancel();
         }
+
+        // TODO trouver un mécanisme pour garantir que le code
+        // s'exécute uniquement après que la tâche se soit bien interrompue
         this.status = STATUS.STOPPED;
         this.currentSlideIndex = 0;
         /// </BUG>
