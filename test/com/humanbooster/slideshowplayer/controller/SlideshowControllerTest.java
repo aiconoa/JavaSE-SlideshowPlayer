@@ -3,8 +3,10 @@ package com.humanbooster.slideshowplayer.controller;
 import com.humanbooster.slideshowplayer.model.Slide;
 import com.humanbooster.slideshowplayer.model.Slideshow;
 import org.junit.Test;
+import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.*;
@@ -16,6 +18,8 @@ public class SlideshowControllerTest {
 
     //TODO tester nextSlide avec un slideshow vide
     //TODO tester nextSlide si trou dans l'ordre du slideshow
+    //TODO tester "resume", cad pause puis play
+
 
     @Test
     public void nextSlideTest() throws Exception {
@@ -173,7 +177,6 @@ public class SlideshowControllerTest {
         assertEquals("on doit avoir traversé " + numberOfSlides + " slides", numberOfSlides, totalSlideChanged.get() + 1);
     }
 
-
     @Test
     public void pause() throws Exception {
         //given
@@ -224,5 +227,38 @@ public class SlideshowControllerTest {
 
         sc.pause();
     }
+
+    @Test
+    public void stop() throws Exception {
+        //given
+        ArrayList<Slide> slides = new ArrayList<>();
+        Slideshow ss = new Slideshow();
+        int numberOfSlides = 10;
+        for (int i = 0; i < numberOfSlides; i++) {
+            slides.add(new Slide());
+            ss.addSlide(slides.get(i));
+        }
+
+        SlideshowController sc = new SlideshowController();
+
+        int transitionTimeBetweenSlides = 100; //ms
+        sc.setTransitionTimeBetweenSlides(transitionTimeBetweenSlides);
+        sc.setSlideshow(ss);
+
+        sc.play();
+
+        Thread.sleep(transitionTimeBetweenSlides * 5); // Optionnel: laisser le test se dérouler un peu
+        sc.stop();
+        Slide slideAfterStop = sc.getCurrentSlide();
+        Thread.sleep(1000);
+        Slide slideAfterStopAndSleep = sc.getCurrentSlide();
+
+        assertEquals("Le slideshow controller doit être en status STOPPED",
+                SlideshowController.STATUS.STOPPED,
+                sc.getStatus());
+        assertEquals("Le slideshow ne doit plus defiler apres stop", slideAfterStop, slideAfterStopAndSleep);
+        assertEquals("Apres stop on doit revenir au premier slide", slides.get(0), sc.getCurrentSlide());
+    }
+
 
 }

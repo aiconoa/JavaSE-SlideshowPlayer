@@ -157,7 +157,7 @@ public class SlideshowController {
 
 
     /**
-     * Stoppe le défilement automatique du diaporama
+     * Stoppe le défilement automatique du diaporama.
      *
      * @throws com.humanbooster.slideshowplayer.controller.SlideshowControllerStatusException si le SlideshowController n'est pas en mode play
      */
@@ -166,8 +166,27 @@ public class SlideshowController {
             throw new SlideshowControllerStatusException("Cannot call pause if SlideshowController is now playing");
         }
         currentTask.cancel(); //TODO si pas play => pas currentTask => NPE
-
         this.status = STATUS.PAUSED;
+    }
+
+    /**
+     * Arrete le défilement. Si le défilement n'est pas démarré, ne fait rien.
+     *
+     * @throws java.lang.NullPointerException si play est appelée alors qu'il n'y a pas de slideshow de chargé.
+     * @throws java.lang.Exception si play est appelée alors que le slideshow est vide.
+     */
+    public void stop() throws Exception {
+        Objects.requireNonNull(slideshow, "Cannot call play if no slideshow has been loaded");
+        requireSlideshowNotEmpty("Cannot call play if slideshow is empty");
+
+
+        /// <BUG>
+        if(currentTask != null) { // cas ou on a jamais fait PLAY ou que le status est PAUSED.
+            currentTask.cancel();
+        }
+        this.status = STATUS.STOPPED;
+        this.currentSlideIndex = 0;
+        /// </BUG>
     }
 
 }
