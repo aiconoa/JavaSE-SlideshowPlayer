@@ -261,4 +261,25 @@ public class SlideshowControllerTest {
     }
 
 
+    @Test
+    public void isCurrentSlideLastSlide() throws Exception {
+        ArrayList<Slide> slides = new ArrayList<>();
+        Slideshow ss = new Slideshow();
+        int numberOfSlides = 10;
+        for (int i = 0; i < numberOfSlides; i++) {
+            slides.add(new Slide());
+            ss.addSlide(slides.get(i));
+        }
+
+        SlideshowController sc = new SlideshowController();
+        sc.setSlideshow(ss);
+
+        for (int i = 1; i < numberOfSlides; i++) {
+            assertFalse("Slide " + i +  " out of 10 should not be the last slide", sc.isCurrentSlideLastSlide());
+            sc.nextSlide();
+        }
+
+        assertTrue("Slide " + numberOfSlides + "out of 10 is the last slide", sc.isCurrentSlideLastSlide());
+
+    }
 }

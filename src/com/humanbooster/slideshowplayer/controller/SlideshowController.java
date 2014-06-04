@@ -192,4 +192,11 @@ public class SlideshowController {
         /// </BUG>
     }
 
+    public boolean isCurrentSlideLastSlide() {
+       return this.currentSlideIndex == (this.slideshow.getNumberOfSlides() - 1);
+    }
+
+    public int getCurrentSlideIndex() {
+        return currentSlideIndex;
+    }
 }
