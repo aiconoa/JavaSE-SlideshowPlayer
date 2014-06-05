@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.humanbooster.slideshowplayer.view.javafx.SlideshowJavaFXController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" stylesheets="@slideshow.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.humanbooster.slideshowplayer.view.javafx.SlideshowJavaFXController">
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -33,10 +33,12 @@
    <bottom>
       <HBox BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="previous" mnemonicParsing="false" onAction="#handlePrevious" text="Previous" />
-            <Button fx:id="next" mnemonicParsing="false" onAction="#handleNext" text="Next" />
-            <Button fx:id="playPauseButton" mnemonicParsing="false" onAction="#handlePlayPause" text="Play" />
-            <Button fx:id="stop" mnemonicParsing="false" onAction="#handleStop" text="Stop" />
+            <Separator valignment="TOP" HBox.hgrow="ALWAYS" />
+            <Button fx:id="previous" mnemonicParsing="false" onAction="#handlePrevious" styleClass="blackButton" text="Previous" />
+            <Button fx:id="next" mnemonicParsing="false" onAction="#handleNext" styleClass="blackButton" text="Next" />
+            <Button fx:id="playPauseButton" mnemonicParsing="false" onAction="#handlePlayPause" styleClass="blackButton" text="Play" />
+            <Button fx:id="stop" mnemonicParsing="false" onAction="#handleStop" styleClass="blackButton" text="Stop" />
+            <Separator HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </bottom>

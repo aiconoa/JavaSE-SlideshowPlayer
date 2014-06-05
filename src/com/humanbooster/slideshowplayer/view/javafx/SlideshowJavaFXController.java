@@ -6,25 +6,38 @@ import com.humanbooster.slideshowplayer.controller.SlideshowControllerStatusExce
 import com.humanbooster.slideshowplayer.model.Slide;
 import com.humanbooster.slideshowplayer.view.javafx.control.SlideView;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class SlideshowJavaFXController implements CurrentSlideChangedListener, Initializable {
+public class SlideshowJavaFXController implements CurrentSlideChangedListener, ChangeListener<Boolean>, Initializable {
 
     @FXML
     private Button playPauseButton;
 
     @FXML
     private StackPane slidePane;
+
+    @FXML
+    private BorderPane borderPane;
+
+    @FXML
+    private MenuBar menuBar;
+
+    private Stage stage;
 
     private SlideView slideView;
 
@@ -58,12 +71,13 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener, I
         try {
             switch(slideshowController.getStatus()) {
                 case PLAYING:
-                    playPauseButton.setText("play"); // TODO pour une meilleure synchro, réagir à un SlideshowController status changed event...
+                    playPauseButton.setText("Play"); // TODO pour une meilleure synchro, réagir à un SlideshowController status changed event...
                     slideshowController.pause();
                     break;
                 case PAUSED:
                 case STOPPED:
-                    playPauseButton.setText("pause");
+                    playPauseButton.setText("Pause");
+                    stage.setFullScreen(true);
                     slideshowController.play();
                     break;
             }
@@ -76,8 +90,36 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener, I
     public void handleStop(ActionEvent e ) {
         try {
             slideshowController.stop();
+            playPauseButton.setText("Play");
+            stage.setFullScreen(false);
+
         } catch (Exception ex) {
             popupExceptionDialog(ex);
+        }
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        if(this.stage != null) {
+            stage.fullScreenProperty().removeListener(this);
+        }
+
+        this.stage = stage;
+
+        if(this.stage != null) {
+            stage.fullScreenProperty().addListener(this);
+        }
+    }
+
+    // listenier to Stage fullscreen mode
+    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+        if(newValue) {
+            borderPane.setTop(null);
+        } else {
+            borderPane.setTop(menuBar);
         }
     }
 

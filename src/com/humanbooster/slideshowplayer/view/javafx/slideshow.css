@@ -1,0 +1,18 @@
+.blackButton {
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+    -fx-background-color: black;
+    -fx-background-insets: 0px;
+    -fx-background-radius: 0px;
+    -fx-content-display: LEFT;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em;
+}
+
+BorderPane {
+    -fx-background-color: black;
+}
+
+.separator *.line {
+    -fx-border-style: none;
+    -fx-border-width: 0px;
+}

@@ -152,7 +152,7 @@ public class SlideshowController {
         };
 
         this.status = STATUS.PLAYING;
-        t.schedule(currentTask, 0, transitionTimeBetweenSlides);
+        t.schedule(currentTask, transitionTimeBetweenSlides, transitionTimeBetweenSlides);
     }
 
 

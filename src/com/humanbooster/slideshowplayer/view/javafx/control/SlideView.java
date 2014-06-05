@@ -4,11 +4,14 @@ import com.humanbooster.slideshowplayer.model.ImageSlideElement;
 import com.humanbooster.slideshowplayer.model.Slide;
 import com.humanbooster.slideshowplayer.model.SlideElement;
 import com.humanbooster.slideshowplayer.model.TextSlideElement;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 /**
  * Inspired from http://fxexperience.com/2014/05/resizable-grid-using-canvas/
@@ -45,6 +48,9 @@ public class SlideView extends Pane {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, width, height);
 
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0,0, width, height);
+
         if(slide == null) {
             drawNoSlide(gc, width, height);
             return;
@@ -53,15 +59,19 @@ public class SlideView extends Pane {
         for (SlideElement element : slide.getSlideElements()) {
             if (element instanceof TextSlideElement) {
                 TextSlideElement ts = (TextSlideElement) element;
-                gc.fillText(ts.getContent(), width * ts.getX(), width * ts.getY());
+
+                gc.setFont(Font.font("Helvetica", 20));
+                gc.setFill(Color.WHITE);
+
+                gc.setTextAlign(TextAlignment.CENTER);
+                gc.setTextBaseline(VPos.CENTER);
+                gc.fillText(ts.getContent(), width / 2 , height * ts.getY() + (height * ts.getHeight()) / 2);
+
             } else if(element instanceof ImageSlideElement) {
                 ImageSlideElement is = (ImageSlideElement) element;
-                String url = String.format("http://placehold.it/%.0fx%.0f", width * is.getWidth(), height * is.getHeight());
-                Image image = new Image(url);
-                gc.drawImage(image, width * is.getX(), height * is.getY());
-                System.out.println(url);
-                System.out.println(width * is.getX());
-                System.out.println(height * is.getY());
+                Image image = new Image(is.getContent());
+
+                gc.drawImage(image, width * is.getX(), height * is.getY(), width * is.getWidth(), height * is.getHeight());
             }
         }
     }
