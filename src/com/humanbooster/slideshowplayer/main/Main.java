@@ -2,7 +2,7 @@ package com.humanbooster.slideshowplayer.main;
 
 import com.humanbooster.slideshowplayer.controller.SlideshowController;
 import com.humanbooster.slideshowplayer.model.*;
-import com.humanbooster.slideshowplayer.view.ConsoleView;
+import com.humanbooster.slideshowplayer.view.console.ConsoleView;
 
 import java.util.Scanner;
 

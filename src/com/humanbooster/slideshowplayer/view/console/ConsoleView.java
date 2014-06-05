@@ -1,4 +1,4 @@
-package com.humanbooster.slideshowplayer.view;
+package com.humanbooster.slideshowplayer.view.console;
 
 import com.humanbooster.slideshowplayer.controller.CurrentSlideChangedListener;
 import com.humanbooster.slideshowplayer.controller.SlideshowController;
