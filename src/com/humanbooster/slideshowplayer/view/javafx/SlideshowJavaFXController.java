@@ -4,22 +4,37 @@ import com.humanbooster.slideshowplayer.controller.CurrentSlideChangedListener;
 import com.humanbooster.slideshowplayer.controller.SlideshowController;
 import com.humanbooster.slideshowplayer.controller.SlideshowControllerStatusException;
 import com.humanbooster.slideshowplayer.model.Slide;
+import com.humanbooster.slideshowplayer.view.javafx.control.SlideView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class SlideshowJavaFXController implements CurrentSlideChangedListener {
+public class SlideshowJavaFXController implements CurrentSlideChangedListener, Initializable {
 
     @FXML
     private Button playPauseButton;
 
     @FXML
-    private TextArea slideDebugArea;
+    private StackPane slidePane;
+
+    private SlideView slideView;
 
     private SlideshowController slideshowController;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        slideView = new SlideView();
+        slidePane.getChildren().add(slideView);
+    }
 
     @FXML
     public void handlePrevious(ActionEvent e) {
@@ -75,6 +90,13 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener {
             this.slideshowController.removeCurrentSlideChangedListener(this);
         }
         this.slideshowController = slideshowController;
+        if(slideshowController.getSlideshow() != null && slideshowController.getSlideshow().getNumberOfSlides() != 0) {
+            try {
+                slideView.setSlide(slideshowController.getCurrentSlide());
+            } catch (Exception e) {
+                popupExceptionDialog(e);
+            }
+        }
 
         if(this.slideshowController != null) {
             this.slideshowController.addCurrentSlideChangedListener(this);
@@ -85,9 +107,9 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener {
     @Override
     public void currentSlideChanged(SlideshowController source, Slide oldSlide, Slide newSlide) {
         Platform.runLater(() -> {
-            slideDebugArea.setText(slideDebugArea.getText()
-                    + "\n"
-                    + "##### Current slide index: " + source.getCurrentSlideIndex() + "#####"
+            slideView.setSlide(newSlide);
+            System.out.println(
+                    "##### Current slide index: " + source.getCurrentSlideIndex() + "#####"
                     + "\n"
                     + newSlide.toString());
         });
@@ -98,4 +120,6 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener {
         System.err.println(e.getMessage());
         e.printStackTrace();
     }
+
+
 }

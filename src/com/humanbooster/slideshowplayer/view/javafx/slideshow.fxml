@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.humanbooster.slideshowplayer.view.javafx.SlideshowJavaFXController">
+<BorderPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.humanbooster.slideshowplayer.view.javafx.SlideshowJavaFXController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -27,6 +27,9 @@
         </menus>
       </MenuBar>
    </top>
+   <center>
+      <StackPane fx:id="slidePane" BorderPane.alignment="CENTER" />
+   </center>
    <bottom>
       <HBox BorderPane.alignment="CENTER">
          <children>
@@ -37,7 +40,4 @@
          </children>
       </HBox>
    </bottom>
-   <center>
-      <TextArea fx:id="slideDebugArea" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </center>
 </BorderPane>

@@ -30,10 +30,10 @@ public class MainJavaFX extends Application {
         for (int i = 0; i < 10; i++) {
             Slide s = new Slide();
 
-            TextSlideElement title = new TextSlideElement(0.1,0.2,0.3,0.4);  // TextSlideElement
+            TextSlideElement title = new TextSlideElement(0.1,0.1,0.8,0.2);  // TextSlideElement
             title.setContent("Slide " + i);
 
-            ImageSlideElement image = new ImageSlideElement(0.1,0.2,0.3,0.4); // ImageSlideElement
+            ImageSlideElement image = new ImageSlideElement(0.1,0.4,0.8,0.5); // ImageSlideElement
             image.setContent("url de l'image");
 
             s.addSlideElement(title);
