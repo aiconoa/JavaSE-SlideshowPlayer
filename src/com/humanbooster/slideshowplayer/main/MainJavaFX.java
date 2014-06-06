@@ -42,7 +42,6 @@ public class MainJavaFX extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.show();
-
     }
 
     private Slideshow dummySlideshowFactory() {

@@ -2,24 +2,23 @@ package com.humanbooster.slideshowplayer.view.javafx;
 
 import com.humanbooster.slideshowplayer.controller.CurrentSlideChangedListener;
 import com.humanbooster.slideshowplayer.controller.SlideshowController;
-import com.humanbooster.slideshowplayer.controller.SlideshowControllerStatusException;
 import com.humanbooster.slideshowplayer.model.Slide;
 import com.humanbooster.slideshowplayer.view.javafx.control.SlideView;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 
@@ -114,7 +113,7 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener, C
         }
     }
 
-    // listenier to Stage fullscreen mode
+    // listener to Stage fullscreen mode
     public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
         if(newValue) {
             borderPane.setTop(null);
@@ -127,14 +126,22 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener, C
         return slideshowController;
     }
 
+    /**
+     *
+     * @param slideshowController
+     * @throws java.lang.NullPointerException is slideshowController is null
+     */
     public void setSlideshowController(SlideshowController slideshowController) {
+        Objects.requireNonNull(slideshowController);
+
         if(this.slideshowController != null) {
             this.slideshowController.removeCurrentSlideChangedListener(this);
         }
         this.slideshowController = slideshowController;
-        if(slideshowController.getSlideshow() != null && slideshowController.getSlideshow().getNumberOfSlides() != 0) {
+
+        if(slideshowController.getSlideshow() != null && slideshowController.getSlideshow().getNumberOfSlides() > 0) {
             try {
-                slideView.setSlide(slideshowController.getCurrentSlide());
+                slideView.setSlide(slideshowController.getCurrentSlide()); // TODO faire évoluer getCurrentSlide() pour renvoyer Optional<Slide> ?
             } catch (Exception e) {
                 popupExceptionDialog(e);
             }
@@ -149,11 +156,7 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener, C
     @Override
     public void currentSlideChanged(SlideshowController source, Slide oldSlide, Slide newSlide) {
         Platform.runLater(() -> {
-            slideView.setSlide(newSlide);
-            System.out.println(
-                    "##### Current slide index: " + source.getCurrentSlideIndex() + "#####"
-                    + "\n"
-                    + newSlide.toString());
+                slideView.setSlide(newSlide);
         });
     }
 
