@@ -5,6 +5,8 @@ import com.humanbooster.slideshowplayer.model.Slide;
 import com.humanbooster.slideshowplayer.model.SlideElement;
 import com.humanbooster.slideshowplayer.model.TextSlideElement;
 import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -93,13 +95,18 @@ public class SlideView extends Pane {
         fadeOut.setToValue(0.0);
         fadeOut.play();
 
-        this.slide = slide;
-        draw();
+        fadeOut.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SlideView.this.slide = slide;
+                draw();
 
-        // ici on rallume la lumière
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), this);
-        fadeIn.setFromValue(0.0);
-        fadeIn.setToValue(1.0);
-        fadeIn.play();
+                // ici on rallume la lumière
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(500), SlideView.this);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+            }
+        });
     }
 }
