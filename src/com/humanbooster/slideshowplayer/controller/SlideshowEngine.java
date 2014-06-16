@@ -12,7 +12,7 @@ import java.util.*;
  * Slideshow, ses Slides , etc...
  * Lors du chargement d'un slideshow le slide courant est le premier slide du slideshow.
  */
-public class SlideshowController {
+public class SlideshowEngine {
 
     public static enum STATUS { PLAYING, PAUSED, STOPPED };
 
@@ -133,8 +133,8 @@ public class SlideshowController {
         currentTask = new TimerTask() {
             @Override
             public void run() {
-                if(SlideshowController.this.slideshow.getNumberOfSlides() - 1
-                    == SlideshowController.this.currentSlideIndex) {
+                if(SlideshowEngine.this.slideshow.getNumberOfSlides() - 1
+                    == SlideshowEngine.this.currentSlideIndex) {
                     t.cancel();
                     return;
                 }
@@ -143,7 +143,7 @@ public class SlideshowController {
                 // http://stackoverflow.com/a/11584273
                 // http://make-aitee-work.blogspot.de/2013/12/a-executor-is-not-thread-or-correct.html
                  try {
-                     SlideshowController.this.nextSlide();
+                     SlideshowEngine.this.nextSlide();
                  } catch (Exception e) {
                      t.cancel();
                      e.printStackTrace(); //TODO logger l'exception

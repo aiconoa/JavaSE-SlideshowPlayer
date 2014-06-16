@@ -1,22 +1,23 @@
 package com.humanbooster.slideshowplayer.view.javafx.control;
 
-import com.humanbooster.slideshowplayer.model.ImageSlideElement;
-import com.humanbooster.slideshowplayer.model.Slide;
-import com.humanbooster.slideshowplayer.model.SlideElement;
-import com.humanbooster.slideshowplayer.model.TextSlideElement;
+import com.humanbooster.slideshowplayer.model.*;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Inspired from http://fxexperience.com/2014/05/resizable-grid-using-canvas/
@@ -62,7 +63,12 @@ public class SlideView extends Pane {
             return;
         }
 
-        for (SlideElement element : slide.getSlideElements()) {
+        Set<SlideElement> slideElements = slide.getSlideElements();
+        // trier les slideElements par z-index ascendant
+        List<SlideElement> zIndexOrderedSlideElements = new ArrayList<>(slideElements);
+        Collections.sort(zIndexOrderedSlideElements, new ZIndexAscendantComparator());
+
+        for (SlideElement element : zIndexOrderedSlideElements) {
             if (element instanceof TextSlideElement) {
                 TextSlideElement ts = (TextSlideElement) element;
 

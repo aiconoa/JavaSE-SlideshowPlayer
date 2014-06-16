@@ -5,8 +5,8 @@ package com.humanbooster.slideshowplayer.model;
  * dont le contenu est de type String
  */
 public class TextSlideElement extends SlideElementWithContentBase {
-    public TextSlideElement(double x, double y, double width, double height) {
-        super(x, y, width, height);
+    public TextSlideElement(double x, double y, double width, double height, int zindex) {
+        super(x, y, width, height, zindex);
     }
 
 }

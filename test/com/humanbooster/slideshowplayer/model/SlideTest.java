@@ -14,7 +14,7 @@ public class SlideTest {
     public void oneSlideElementTest() throws Exception {
         // given
         Slide slide = new Slide();
-        SlideElement se = new TextSlideElement(0,0,0,0);
+        SlideElement se = new TextSlideElement(0,0,0,0, -1);
         // when
         slide.addSlideElement(se);
         // test

@@ -1,7 +1,7 @@
 package com.humanbooster.slideshowplayer.view.console;
 
 import com.humanbooster.slideshowplayer.controller.CurrentSlideChangedListener;
-import com.humanbooster.slideshowplayer.controller.SlideshowController;
+import com.humanbooster.slideshowplayer.controller.SlideshowEngine;
 import com.humanbooster.slideshowplayer.model.Slide;
 
 /**
@@ -9,7 +9,7 @@ import com.humanbooster.slideshowplayer.model.Slide;
  */
 public class ConsoleView implements CurrentSlideChangedListener {
     @Override
-    public void currentSlideChanged(SlideshowController source, Slide oldSlide, Slide newSlide) {
+    public void currentSlideChanged(SlideshowEngine source, Slide oldSlide, Slide newSlide) {
         System.out.println(newSlide);
     }
 }

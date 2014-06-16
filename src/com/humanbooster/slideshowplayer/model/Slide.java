@@ -25,6 +25,7 @@ public class Slide {
      */
     public void addSlideElement(SlideElement se) {
         Objects.requireNonNull(se); //TODO test unitaire de la NPE
+        se.setZIndex(slideElements.size()); // TODO attention si removeSlideElement il faudra enlever les "trous"
         slideElements.add(se);
     }
 

@@ -1,6 +1,6 @@
 package com.humanbooster.slideshowplayer.main;
 
-import com.humanbooster.slideshowplayer.controller.SlideshowController;
+import com.humanbooster.slideshowplayer.controller.SlideshowEngine;
 import com.humanbooster.slideshowplayer.model.ImageSlideElement;
 import com.humanbooster.slideshowplayer.model.Slide;
 import com.humanbooster.slideshowplayer.model.Slideshow;
@@ -17,16 +17,16 @@ import javafx.stage.Stage;
  */
 public class MainJavaFX extends Application {
 
-    private SlideshowController slideshowController = null;
+    private SlideshowEngine slideshowEngine = null;
 
     @Override
     public void init() throws Exception {
         super.init();
 
-        slideshowController = new SlideshowController();
-        slideshowController.setTransitionTimeBetweenSlides(3000);
+        slideshowEngine = new SlideshowEngine();
+        slideshowEngine.setTransitionTimeBetweenSlides(3000);
         //slideshowController.setSlideshow(dummySlideshowFactory());
-        slideshowController.setSlideshow(defaultSlideshowFactory());
+        slideshowEngine.setSlideshow(defaultSlideshowFactory());
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MainJavaFX extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent root = fxmlLoader.load();
         SlideshowJavaFXController slideshowJavaFXController = fxmlLoader.getController();
-        slideshowJavaFXController.setSlideshowController(slideshowController);
+        slideshowJavaFXController.setSlideshowEngine(slideshowEngine);
         slideshowJavaFXController.setStage(primaryStage);
 
         Scene scene = new Scene(root, 640, 480);
@@ -52,10 +52,10 @@ public class MainJavaFX extends Application {
         for (int i = 0; i < 10; i++) {
             Slide s = new Slide();
 
-            TextSlideElement title = new TextSlideElement(0.1,0.1,0.8,0.2);  // TextSlideElement
+            TextSlideElement title = new TextSlideElement(0.1,0.1,0.8,0.2, -1);  // TextSlideElement
             title.setContent("Slide " + i);
 
-            ImageSlideElement image = new ImageSlideElement(0.1,0.4,0.8,0.5); // ImageSlideElement
+            ImageSlideElement image = new ImageSlideElement(0.1,0.4,0.8,0.5, -1); // ImageSlideElement
             image.setContent("http://placehold.it/640x480");
 
             s.addSlideElement(title);
@@ -79,10 +79,10 @@ public class MainJavaFX extends Application {
     private Slide slideFactory(String title, String imageURL) {
         Slide s = new Slide();
 
-        TextSlideElement textSlideElement = new TextSlideElement(0.025,0.025, 0.95, 0.05);  // TextSlideElement
+        TextSlideElement textSlideElement = new TextSlideElement(0.025,0.025, 0.95, 0.05, -1);  // TextSlideElement
         textSlideElement.setContent(title);
 
-        ImageSlideElement imageSlideElement = new ImageSlideElement(0.025,0.1, 0.95, 0.875); // ImageSlideElement
+        ImageSlideElement imageSlideElement = new ImageSlideElement(0.025,0.1, 0.95, 0.875, -1); // ImageSlideElement
         imageSlideElement.setContent(imageURL);
 
         s.addSlideElement(textSlideElement);

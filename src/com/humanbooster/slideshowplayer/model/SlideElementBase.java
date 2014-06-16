@@ -25,11 +25,14 @@ public class SlideElementBase implements SlideElement{
      */
     private double height;
 
-    public SlideElementBase(double x, double y, double width, double height) {
+    private int zindex;
+
+    public SlideElementBase(double x, double y, double width, double height, int zindex) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.zindex = zindex;
     }
 
     public double getX() {
@@ -64,13 +67,22 @@ public class SlideElementBase implements SlideElement{
         this.height = height;
     }
 
+    public int getZIndex() {
+        return zindex;
+    }
+
+    public void setZIndex(int zindex) {
+        this.zindex = zindex;
+    }
+
     @Override
     public String toString() {
-        return getClass().getCanonicalName() + " {" +
+        return "SlideElementBase{" +
                 "x=" + x +
                 ", y=" + y +
                 ", width=" + width +
                 ", height=" + height +
+                ", zindex=" + zindex +
                 '}';
     }
 }

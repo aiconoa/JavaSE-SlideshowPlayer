@@ -1,6 +1,6 @@
 package com.humanbooster.slideshowplayer.main;
 
-import com.humanbooster.slideshowplayer.controller.SlideshowController;
+import com.humanbooster.slideshowplayer.controller.SlideshowEngine;
 import com.humanbooster.slideshowplayer.model.*;
 import com.humanbooster.slideshowplayer.view.console.ConsoleView;
 
@@ -21,10 +21,10 @@ public class Main {
         for (int i = 0; i < 10; i++) {
             Slide s = new Slide();
 
-            TextSlideElement title = new TextSlideElement(0.1,0.2,0.3,0.4);  // TextSlideElement
+            TextSlideElement title = new TextSlideElement(0.1,0.2,0.3,0.4, -1);  // TextSlideElement
             title.setContent("Slide " + i);
 
-            ImageSlideElement image = new ImageSlideElement(0.1,0.2,0.3,0.4); // ImageSlideElement
+            ImageSlideElement image = new ImageSlideElement(0.1,0.2,0.3,0.4, -1); // ImageSlideElement
             image.setContent("url de l'image");
 
             s.addSlideElement(title);
@@ -33,7 +33,7 @@ public class Main {
             ss.addSlide(s);
         }
 
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
         sc.setSlideshow(ss);
 
         ConsoleView view = new ConsoleView();

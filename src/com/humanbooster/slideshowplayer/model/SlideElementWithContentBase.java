@@ -7,8 +7,8 @@ package com.humanbooster.slideshowplayer.model;
 public class SlideElementWithContentBase extends SlideElementBase {
     private String content;
 
-    public SlideElementWithContentBase(double x, double y, double width, double height) {
-        super(x, y, width, height);
+    public SlideElementWithContentBase(double x, double y, double width, double height, int zindex) {
+        super(x, y, width, height, zindex);
     }
 
     public String getContent() {

@@ -1,14 +1,13 @@
 package com.humanbooster.slideshowplayer.view.javafx;
 
 import com.humanbooster.slideshowplayer.controller.CurrentSlideChangedListener;
-import com.humanbooster.slideshowplayer.controller.SlideshowController;
+import com.humanbooster.slideshowplayer.controller.SlideshowEngine;
 import com.humanbooster.slideshowplayer.model.Slide;
 import com.humanbooster.slideshowplayer.view.javafx.control.SlideView;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -40,7 +39,7 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener, C
 
     private SlideView slideView;
 
-    private SlideshowController slideshowController;
+    private SlideshowEngine slideshowEngine;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,8 +56,8 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener, C
     public void handleNext(ActionEvent e) {
 
         try {
-            if(! slideshowController.isCurrentSlideLastSlide()) {
-                slideshowController.nextSlide();
+            if(! slideshowEngine.isCurrentSlideLastSlide()) {
+                slideshowEngine.nextSlide();
             }
         } catch (Exception ex) {
             popupExceptionDialog(ex);
@@ -68,16 +67,16 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener, C
     @FXML
     public void handlePlayPause(ActionEvent e) {
         try {
-            switch(slideshowController.getStatus()) {
+            switch(slideshowEngine.getStatus()) {
                 case PLAYING:
                     playPauseButton.setText("Play"); // TODO pour une meilleure synchro, réagir à un SlideshowController status changed event...
-                    slideshowController.pause();
+                    slideshowEngine.pause();
                     break;
                 case PAUSED:
                 case STOPPED:
                     playPauseButton.setText("Pause");
                     stage.setFullScreen(true);
-                    slideshowController.play();
+                    slideshowEngine.play();
                     break;
             }
         } catch (Exception ex) {
@@ -88,7 +87,7 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener, C
     @FXML
     public void handleStop(ActionEvent e ) {
         try {
-            slideshowController.stop();
+            slideshowEngine.stop();
             playPauseButton.setText("Play");
             stage.setFullScreen(false);
 
@@ -122,39 +121,39 @@ public class SlideshowJavaFXController implements CurrentSlideChangedListener, C
         }
     }
 
-    public SlideshowController getSlideshowController() {
-        return slideshowController;
+    public SlideshowEngine getSlideshowEngine() {
+        return slideshowEngine;
     }
 
     /**
      *
-     * @param slideshowController
+     * @param slideshowEngine
      * @throws java.lang.NullPointerException is slideshowController is null
      */
-    public void setSlideshowController(SlideshowController slideshowController) {
-        Objects.requireNonNull(slideshowController);
+    public void setSlideshowEngine(SlideshowEngine slideshowEngine) {
+        Objects.requireNonNull(slideshowEngine);
 
-        if(this.slideshowController != null) {
-            this.slideshowController.removeCurrentSlideChangedListener(this);
+        if(this.slideshowEngine != null) {
+            this.slideshowEngine.removeCurrentSlideChangedListener(this);
         }
-        this.slideshowController = slideshowController;
+        this.slideshowEngine = slideshowEngine;
 
-        if(slideshowController.getSlideshow() != null && slideshowController.getSlideshow().getNumberOfSlides() > 0) {
+        if(slideshowEngine.getSlideshow() != null && slideshowEngine.getSlideshow().getNumberOfSlides() > 0) {
             try {
-                slideView.setSlide(slideshowController.getCurrentSlide()); // TODO faire évoluer getCurrentSlide() pour renvoyer Optional<Slide> ?
+                slideView.setSlide(slideshowEngine.getCurrentSlide()); // TODO faire évoluer getCurrentSlide() pour renvoyer Optional<Slide> ?
             } catch (Exception e) {
                 popupExceptionDialog(e);
             }
         }
 
-        if(this.slideshowController != null) {
-            this.slideshowController.addCurrentSlideChangedListener(this);
+        if(this.slideshowEngine != null) {
+            this.slideshowEngine.addCurrentSlideChangedListener(this);
         }
 
     }
 
     @Override
-    public void currentSlideChanged(SlideshowController source, Slide oldSlide, Slide newSlide) {
+    public void currentSlideChanged(SlideshowEngine source, Slide oldSlide, Slide newSlide) {
         Platform.runLater(() -> {
                 slideView.setSlide(newSlide);
         });

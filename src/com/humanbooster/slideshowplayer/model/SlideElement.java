@@ -23,4 +23,8 @@ public interface SlideElement {
     public double getHeight();
 
     public void setHeight(double height);
+
+    public int getZIndex();
+
+    public void setZIndex(int zindex);
 }

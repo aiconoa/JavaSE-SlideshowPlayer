@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -28,7 +29,11 @@
       </MenuBar>
    </top>
    <center>
-      <StackPane fx:id="slidePane" BorderPane.alignment="CENTER" />
+      <StackPane fx:id="slidePane" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </StackPane>
    </center>
    <bottom>
       <HBox BorderPane.alignment="CENTER">

@@ -3,15 +3,13 @@ package com.humanbooster.slideshowplayer.controller;
 import com.humanbooster.slideshowplayer.model.Slide;
 import com.humanbooster.slideshowplayer.model.Slideshow;
 import org.junit.Test;
-import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.*;
 
-public class SlideshowControllerTest {
+public class SlideshowEngineTest {
 
     //TODO tester nextSlide en positionnant le slide courant au milieu
     //TODO tester nextSlide en positionnant le slide à la fin au milieu
@@ -30,7 +28,7 @@ public class SlideshowControllerTest {
         ss.addSlide(s1);
         ss.addSlide(s2);
 
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
         sc.setSlideshow(ss);
 
         //when
@@ -43,7 +41,7 @@ public class SlideshowControllerTest {
     @Test(expected = Exception.class)
     public void nextSlideIfNoSlideshowHasBeenLoadedTest() throws Exception {
         //given
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
         //when
         sc.nextSlide();
     }
@@ -51,7 +49,7 @@ public class SlideshowControllerTest {
     @Test(expected = Exception.class)
     public void nextSlideIfSlideshowIsEmptyTest() throws Exception {
         //given
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
         sc.setSlideshow(new Slideshow());
         //when
         sc.nextSlide();
@@ -64,7 +62,7 @@ public class SlideshowControllerTest {
         Slide s1 = new Slide();
         ss.addSlide(s1);
 
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
         sc.setSlideshow(ss);
         //when
         sc.nextSlide();
@@ -77,7 +75,7 @@ public class SlideshowControllerTest {
         Slide s1 = new Slide();
         ss.addSlide(s1);
 
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
         sc.setSlideshow(ss);
         //when
         Slide currentSlide = sc.getCurrentSlide();
@@ -89,7 +87,7 @@ public class SlideshowControllerTest {
     @Test(expected = Exception.class)
     public void getCurrentSlideIfNoSlideshowHasBeenLoadedTest() throws Exception {
         //given
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
         //when
         sc.getCurrentSlide();
     }
@@ -97,7 +95,7 @@ public class SlideshowControllerTest {
     @Test(expected = Exception.class)
     public void getCurrentSlideIfSlideshowIsEmptyTest() throws Exception {
         //given
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
         sc.setSlideshow(new Slideshow());
         //when
         sc.getCurrentSlide();
@@ -113,7 +111,7 @@ public class SlideshowControllerTest {
             ss.addSlide(slides.get(i));
         }
 
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
         sc.setSlideshow(ss);
 
         for (int i = 1; i < slides.size(); i++) {
@@ -136,7 +134,7 @@ public class SlideshowControllerTest {
             ss.addSlide(slides.get(i));
         }
 
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
 
         int transitionTimeBetweenSlides = 100; //ms
         sc.setTransitionTimeBetweenSlides(transitionTimeBetweenSlides);
@@ -146,7 +144,7 @@ public class SlideshowControllerTest {
 
         CurrentSlideChangedListener listener = new CurrentSlideChangedListener() {
             @Override
-            public void currentSlideChanged(SlideshowController source, Slide oldSlide, Slide newSlide) {
+            public void currentSlideChanged(SlideshowEngine source, Slide oldSlide, Slide newSlide) {
                 totalSlideChanged.incrementAndGet();
                 // Then
                 // vérifier que le nouveau slide est bien le slide suivant
@@ -165,7 +163,7 @@ public class SlideshowControllerTest {
         //when
         sc.play();
 
-        assertEquals("Le slideshow controller doit être en status PLAYING", SlideshowController.STATUS.PLAYING, sc.getStatus());
+        assertEquals("Le slideshow controller doit être en status PLAYING", SlideshowEngine.STATUS.PLAYING, sc.getStatus());
 
         // on estime que le diaporama doit avoir défilé après un temps egal à
         // nb_slides * frequence de changement du slide + marge d'erreur
@@ -188,7 +186,7 @@ public class SlideshowControllerTest {
             ss.addSlide(slides.get(i));
         }
 
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
 
         int transitionTimeBetweenSlides = 100; //ms
         sc.setTransitionTimeBetweenSlides(transitionTimeBetweenSlides);
@@ -203,7 +201,7 @@ public class SlideshowControllerTest {
         Slide slideAfterPauseAndSleep = sc.getCurrentSlide();
 
         assertEquals("Le slideshow controller doit être en status PAUSED",
-                SlideshowController.STATUS.PAUSED,
+                SlideshowEngine.STATUS.PAUSED,
                 sc.getStatus());
         assertEquals("Le slideshow ne doit plus defiler apres la pause", slideAfterPause, slideAfterPauseAndSleep);
     }
@@ -219,7 +217,7 @@ public class SlideshowControllerTest {
             ss.addSlide(slides.get(i));
         }
 
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
 
         int transitionTimeBetweenSlides = 100; //ms
         sc.setTransitionTimeBetweenSlides(transitionTimeBetweenSlides);
@@ -239,7 +237,7 @@ public class SlideshowControllerTest {
             ss.addSlide(slides.get(i));
         }
 
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
 
         int transitionTimeBetweenSlides = 100; //ms
         sc.setTransitionTimeBetweenSlides(transitionTimeBetweenSlides);
@@ -254,7 +252,7 @@ public class SlideshowControllerTest {
         Slide slideAfterStopAndSleep = sc.getCurrentSlide();
 
         assertEquals("Le slideshow controller doit être en status STOPPED",
-                SlideshowController.STATUS.STOPPED,
+                SlideshowEngine.STATUS.STOPPED,
                 sc.getStatus());
         assertEquals("Le slideshow ne doit plus defiler apres stop", slideAfterStop, slideAfterStopAndSleep);
         assertEquals("Apres stop on doit revenir au premier slide", slides.get(0), sc.getCurrentSlide());
@@ -271,7 +269,7 @@ public class SlideshowControllerTest {
             ss.addSlide(slides.get(i));
         }
 
-        SlideshowController sc = new SlideshowController();
+        SlideshowEngine sc = new SlideshowEngine();
         sc.setSlideshow(ss);
 
         for (int i = 1; i < numberOfSlides; i++) {
